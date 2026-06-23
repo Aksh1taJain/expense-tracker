@@ -1,0 +1,6 @@
+import { NavLink, Outlet } from 'react-router-dom';
+import { BarChart3, LayoutDashboard, LogOut, ReceiptText, Settings, WalletCards } from 'lucide-react';
+import { toast } from 'react-toastify';
+import { logoutUser } from '../services/authService';
+const links=[['/',LayoutDashboard,'Dashboard'],['/transactions',ReceiptText,'Transactions'],['/budgets',WalletCards,'Budgets'],['/reports',BarChart3,'Reports'],['/settings',Settings,'Settings']];
+export default function AppLayout(){async function logout(){await logoutUser(); toast.success('Signed out');} return <div className="min-h-screen bg-slate-50 md:flex"><aside className="sticky top-0 z-10 border-b bg-white p-4 md:h-screen md:w-72 md:border-b-0 md:border-r"><h1 className="text-2xl font-black text-indigo-700">BudgetWise</h1><nav className="mt-6 flex gap-2 overflow-x-auto md:flex-col">{links.map(([to,Icon,label])=><NavLink key={to} to={to} className={({isActive})=>`flex items-center gap-3 rounded-xl px-3 py-2 font-semibold ${isActive?'bg-indigo-50 text-indigo-700':'text-slate-600 hover:bg-slate-100'}`}><Icon size={18}/>{label}</NavLink>)}</nav><button onClick={logout} className="mt-6 flex items-center gap-3 rounded-xl px-3 py-2 font-semibold text-red-600 hover:bg-red-50"><LogOut size={18}/>Logout</button></aside><main className="flex-1 p-4 md:p-8"><Outlet/></main></div>}

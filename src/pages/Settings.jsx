@@ -1,0 +1,2 @@
+import PageHeader from '../components/PageHeader'; import { useAuth } from '../context/AuthContext';
+export default function Settings(){const {user}=useAuth(); return <><PageHeader title="Settings" subtitle="Profile and account details"/><div className="card max-w-xl space-y-3"><p><b>Name:</b> {user.displayName || 'Not set'}</p><p><b>Email:</b> {user.email}</p><p><b>User ID:</b> {user.uid}</p><p className="text-sm text-slate-500">Your Firestore records are scoped by this user ID so each account can access only its own transactions and budgets.</p></div></>}
