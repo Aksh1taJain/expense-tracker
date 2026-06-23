@@ -1,80 +1,156 @@
-# BudgetWise Expense Tracker
+# BudgetWise – Expense Tracker with Budget Insights
 
-A production-ready React + Firebase expense tracker with authentication, per-user Firestore data isolation, transaction management, monthly budgets, Chart.js analytics, CSV export, and PDF financial reports.
+A modern personal finance management application built with React, Firebase, and Chart.js. BudgetWise helps users track income and expenses, manage monthly budgets, visualize spending patterns, and generate detailed financial reports.
 
 ## Features
 
-- Firebase email/password registration, login, logout, and persistent sessions
-- Protected routes and authenticated app shell
-- Dashboard cards for income, expenses, balance, savings, and highest spending category
-- Firestore CRUD for transactions and budgets scoped by `userId`
-- Filters for transaction type, category, month, and note search
-- Budget progress bars with 80% warnings and exceeded alerts
-- Bar, pie, and line charts powered by live Firestore data
-- Monthly reports with category breakdown, largest expense, savings summary, and month-over-month insight
-- CSV transaction export and jsPDF monthly report export
-- Responsive Tailwind CSS interface with empty/loading states and toast notifications
+### Authentication
 
-## Getting Started
+* Firebase Email/Password Authentication
+* User Registration & Login
+* Persistent Sessions
+* Protected Routes
+
+### Expense & Income Tracking
+
+* Add, Edit, and Delete Transactions
+* Income and Expense Management
+* Transaction History
+* Search and Filter Transactions
+* Category and Monthly Filtering
+
+### Budget Management
+
+* Create Monthly Budgets by Category
+* Budget Progress Tracking
+* Remaining Budget Calculation
+* 80% Budget Warning Alerts
+* Budget Exceeded Notifications
+
+### Analytics Dashboard
+
+* Total Income Overview
+* Total Expense Overview
+* Current Balance Tracking
+* Savings Summary
+* Highest Spending Category
+
+### Data Visualization
+
+* Income vs Expense Bar Chart
+* Expense Distribution Pie Chart
+* Monthly Spending Trend Line Chart
+
+### Reports & Export
+
+* Monthly Financial Reports
+* Category-wise Expense Breakdown
+* Largest Expense Analysis
+* Savings Insights
+* Month-over-Month Comparison
+* Export Transactions as CSV
+* Export Reports as PDF
+
+### User Experience
+
+* Responsive Design
+* Modern Dashboard UI
+* Toast Notifications
+* Loading & Empty States
+
+---
+
+## Tech Stack
+
+### Frontend
+
+* React.js (Vite)
+* React Router
+* Tailwind CSS
+* Chart.js
+* React Toastify
+
+### Backend & Database
+
+* Firebase Authentication
+* Firebase Firestore
+
+### Utilities
+
+* jsPDF
+* PapaParse
+
+---
+
+## Project Screenshots
+
+### Login Page
+
+![Login](screenshots/1.png)
+
+### Dashboard
+
+![Dashboard](screenshots/2.png)
+
+### Transactions
+
+![Transactions](screenshots/3.png)
+
+### Budgets
+
+![Budgets](screenshots/4.png)
+
+### Reports
+
+![Reports](screenshots/5.png)
+
+---
+
+## Installation
+
+### Clone Repository
+
+```bash
+git clone <repository-url>
+cd expense-tracker
+```
+
+### Install Dependencies
 
 ```bash
 npm install
-cp .env.example .env
+```
+
+### Configure Environment Variables
+
+Create a `.env` file in the project root and add:
+
+```env
+VITE_FIREBASE_API_KEY=your_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=your_project_id
+VITE_FIREBASE_STORAGE_BUCKET=your_project.firebasestorage.app
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+VITE_FIREBASE_APP_ID=your_app_id
+```
+
+### Run Application
+
+```bash
 npm run dev
 ```
 
-Create a Firebase project, enable Email/Password Authentication, create a Firestore database, and paste your web app config into `.env`.
 
-## Firestore Collections
 
-### `transactions`
+---
 
-```js
-{
-  userId: string,
-  type: 'income' | 'expense',
-  amount: number,
-  category: string,
-  date: string,
-  note: string,
-  createdAt: timestamp
-}
-```
+## Future Improvements
 
-### `budgets`
+* Recurring Transactions
+* Multi-Currency Support
+* Dark Mode
+* Expense Prediction using AI
+* Financial Goal Tracking
+* Email Budget Alerts
 
-```js
-{
-  userId: string,
-  category: string,
-  limit: number,
-  month: string
-}
-```
-
-### `users`
-
-Created during registration with the user's name, email, and server timestamp.
-
-## Recommended Firestore Rules
-
-```js
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    match /users/{userId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
-    }
-    match /transactions/{document} {
-      allow read, create, update, delete: if request.auth != null && request.auth.uid == resource.data.userId;
-      allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
-    }
-    match /budgets/{document} {
-      allow read, create, update, delete: if request.auth != null && request.auth.uid == resource.data.userId;
-      allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
-    }
-  }
-}
-```
-
-Firestore may prompt you to create composite indexes for queries combining `userId` and `date`/`month` ordering. Follow the Firebase console link from the error message if needed.
+---
