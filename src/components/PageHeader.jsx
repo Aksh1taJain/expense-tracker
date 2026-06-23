@@ -1,0 +1,1 @@
+export default function PageHeader({title,subtitle,children}){return <div className="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-center"><div><h2 className="text-3xl font-black text-slate-900">{title}</h2><p className="text-slate-500">{subtitle}</p></div>{children}</div>}
